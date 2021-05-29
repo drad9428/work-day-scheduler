@@ -24,6 +24,30 @@ for(var i = 0; i < containerEl.length; i++){
     auditSchedule(containerEl[i])
 }
 
+$(".time-block").on("click", "p", function(){
+    var text = $(this).text().trim()
+    var textInput = $("<textarea>").addClass("col-10 mb-0").val(text)
+
+    $(this).replaceWith(textInput)
+    textInput.trigger("focus")
+})
+
+$(".time-block").on("blur", "textarea", function(){
+    var text = $(this).val().trim()
+    var textDisplay = $("<p>").addClass("col-10 mb-0").text(text)
+
+    $(this).replaceWith(textDisplay)
+
+    for(var i = 0; i < containerEl.length; i++){
+        auditSchedule(containerEl[i])
+    }
+    console.log($(this.val))
+})
+
+$(".time-block").on("click", "button", function(){
+    console.log("clicked")
+})
+
 setInterval(function(){
     for(var i = 0; i < containerEl.length; i++){
         auditSchedule(containerEl[i])
