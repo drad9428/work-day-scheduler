@@ -6,7 +6,6 @@ currentDayEl.append(moment().format("dddd") + ", " + moment().format("MMM Do"))
 var auditSchedule = function(timeblockEl){
     var hour = $(timeblockEl).find("span").text().trim();
     var time = moment(hour, "LT")
-    console.log(time, "hour")
 
     $(timeblockEl).removeClass("past present future")
 
@@ -24,3 +23,10 @@ var auditSchedule = function(timeblockEl){
 for(var i = 0; i < containerEl.length; i++){
     auditSchedule(containerEl[i])
 }
+
+setInterval(function(){
+    for(var i = 0; i < containerEl.length; i++){
+        auditSchedule(containerEl[i])
+    }
+    console.log("update")
+}, (1000 * 60))
