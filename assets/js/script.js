@@ -1,5 +1,6 @@
 var currentDayEl = $("#currentDay");
 var containerEl = $(".time-block");
+var events = [{name:"",time:"9AM"},{name:"",time:"10AM"},{name:"",time:"11AM"},{name:"",time:"12PM"},{name:"",time:"1PM"},{name:"",time:"2PM"},{name:"",time:"3PM"},{name:"",time:"4PM"},{name:"",time:"5PM"}];
 
 //display current day
 currentDayEl.append(moment().format("dddd") + ", " + moment().format("MMM Do"))
@@ -46,7 +47,11 @@ $(".time-block").on("blur", "textarea", function(){
     //get current text and create p tag to display
     var text = $(this).val().trim()
     var textDisplay = $("<p>").addClass("col-10 mb-0").text(text)
-
+    
+    //record data for event object
+    var eventText = text
+    var eventTime = $(this).siblings(".hour").text();
+    
     //switch to p tag with text
     $(this).replaceWith(textDisplay)
 
@@ -54,11 +59,23 @@ $(".time-block").on("blur", "textarea", function(){
     for(var i = 0; i < containerEl.length; i++){
         auditSchedule(containerEl[i])
     }
+
+    for(var i = 0; i < events.length; i++){
+        if(events[i].time === eventTime){
+            events[i].name = eventText;
+        }
+    }
 })
 
-//save event
+
+
+var saveEvent = function(){
+    localStorage.setItem("event", JSON.stringify(events));
+}
+
+//save event on click
 $(".time-block").on("click", "button", function(){
-    console.log("clicked")
+    saveEvent();
 })
 
 //refresh timer
