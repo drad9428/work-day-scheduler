@@ -60,6 +60,7 @@ $(".time-block").on("blur", "textarea", function(){
         auditSchedule(containerEl[i])
     }
 
+    //update event name
     for(var i = 0; i < events.length; i++){
         if(events[i].time === eventTime){
             events[i].name = eventText;
@@ -68,7 +69,7 @@ $(".time-block").on("blur", "textarea", function(){
 })
 
 
-
+//saves events array to local storage
 var saveEvent = function(){
     localStorage.setItem("event", JSON.stringify(events));
 }
@@ -78,6 +79,24 @@ $(".time-block").on("click", "button", function(){
     saveEvent();
 })
 
+//load events
+var loadEvents = function(){
+    //get local storage data
+    var savedEvents = localStorage.getItem("event");
+    
+    //if theres no data then exit
+    if(!savedEvents){
+        return false;
+    }
+
+    savedEvents = JSON.parse(savedEvents)
+    console.log()
+    //input data
+    for(var i = 0; i < savedEvents.length; i++){
+        $(containerEl[i]).children("p").text(savedEvents[i].name)
+    }
+}
+
 //refresh timer
 setInterval(function(){
     for(var i = 0; i < containerEl.length; i++){
@@ -85,3 +104,5 @@ setInterval(function(){
     }
     console.log("update")
 }, (1000 * 60))
+
+loadEvents();
